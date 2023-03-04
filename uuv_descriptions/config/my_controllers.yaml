@@ -1,0 +1,16 @@
+controlle_manager:
+	ros__parameters:
+		update_rate: 30
+		use_sim_time: true
+		
+		diff_cont:
+			type: diff_drive_controller/DiffDriveController
+diff_cont:
+	ros_parameters:
+	publish_rate: 50.0
+	base_frame_id: base_link
+	left_wheel_names: ['thruster_0']
+	right_wheel_names: ['thruster_1']
+	wheel_seperation: 0.05
+	wheel_radius: 0.005
+	use_stamped_vel: false

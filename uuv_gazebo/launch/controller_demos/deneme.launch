@@ -13,7 +13,7 @@
     <include file="$(find uuv_gazebo_worlds)/launch/ocean_waves.launch"/>
 
     <!-- Add the Barbaros vehicle to the world  -->
-    <include file="$(find uuv_descriptions)/launch/upload_barbaros.launch">
+    <include file="$(find uuv_descriptions)/launch/upload_barbaros_real.launch">
         <arg name="x" default="$(arg x)"/>
         <arg name="y" default="$(arg y)"/>
         <arg name="z" default="$(arg z)"/>

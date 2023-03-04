@@ -1,5 +1,5 @@
 <launch>
-  <arg name="uuv_name" />
+  <arg name="uuv_name" default="barbaros"/>
   <arg name="output_topic" default="cmd_vel"/>
   <!-- The type of message can also be geometry_msgs/Accel -->
   <arg name="message_type" default="twist"/>
