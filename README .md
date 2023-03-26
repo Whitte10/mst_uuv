@@ -67,15 +67,17 @@ catkin_ws/src içine "**mst_uuv**" github dosyasını indiriniz
 (Github desktop kullanımını tavsiye ederiz.
 Github desktop için: https://gist.github.com/berkorbay/6feda478a00b0432d13f1fc0a50467f1)
 
+Ardından gerekli bazı paketler için;
+
+	sudo apt-get install ros-indigo-serial
+	pip install scipy
+	sudo apt-get install ros-noetic-rosserial-arduino ros-noetic-rosserial-embeddedlinux ros-noetic-rosserial-windows ros-noetic-rosserial-server ros-noetic-rosserial-python
+
 catkin_ws yoluna gidin 
     
     catkin_make 
 
 komutunu çalıştırarak dizini derleyiniz. Bu aşamada derlemenin hatasız olması gerekmektedir.
-
-scipy kütüphanesini indirmek için(USV nin hareketi için kullanılan kütüphane USV hareket etmiyorsa yükleyiniz);
-
-    pip install scipy
 
 terminalde en ana dizinde;
 
