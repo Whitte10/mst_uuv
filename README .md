@@ -43,6 +43,10 @@ http://wiki.ros.org/noetic/Installation/Ubuntu
 
 	rosdep update
 
+Bu aşamadan sonra ros kurulmuş olması gerekmektedir. 
+Sonraki aşamalarda ros için daha uygun terminal olan "terminator" indirmek için;
+
+    sudo apt-get install terminator
 ardından ros kodlarını koymak için istediğiniz bir dizine(home dizini olması önerilir) aşağıdaki kodları yazıp klasör oluşturunuz.
 
     mkdir catkin_ws 
@@ -60,7 +64,8 @@ komutunu çalıştırarak dizini derleyiniz.
 Ardından ;
 
 catkin_ws/src içine "**mst_uuv**" github dosyasını indiriniz
-(github desktop kullanımını tavsiye ederiz)
+(Github desktop kullanımını tavsiye ederiz.
+Github desktop için: https://gist.github.com/berkorbay/6feda478a00b0432d13f1fc0a50467f1)
 
 catkin_ws yoluna gidin 
     
@@ -72,12 +77,14 @@ scipy kütüphanesini indirmek için(USV nin hareketi için kullanılan kütüph
 
     pip install scipy
 
-terminalde en ana dizinde gedit ~/.bashrc yazılır
+terminalde en ana dizinde;
 
-	source /opt/ros/noetic/setup.bash
+         sudo gedit ~/.bashrc
+komutu çalıştırılır.
+
 	source /home/user/catkin_ws/devel/setup.bash
 
-satırlarını sona yapıştırılır(user yerine kullanıcı adı)
+satırları sona yapıştırılır(user yerine kullanıcı adı)
 
 Bu aşamadan sonra modüllerin başarıyla yüklenmiş olması gerekmektedir.
 
@@ -117,6 +124,8 @@ Denemek için;
 		rosrun mpu6050_serial_to_imu mpupose
 
 		roslaunch mpu6050_serial_to_imu mpupose.launch 
+
+Not: Mpu ile oryantasyon ayarlamak için arduinoya gerekli kodun yüklenmesi ve bağlantılarının yapılması gerekmektedir. Ayrıca arduinoyu bağladığınız portu belirtmeyi unutmayınız.
 ## Yazarlar ve Teşekkür
 
 - Danışman: [@Cenk Ulu](https://avesis.yildiz.edu.tr/cenkulu/dokumanlar) 
