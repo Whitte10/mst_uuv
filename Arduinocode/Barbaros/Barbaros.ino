@@ -1,15 +1,25 @@
-#include "I2Cdev.h"
 
+#include <TinyGPSPlus.h>
+#include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
 
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
     #include "Wire.h"
 #endif
 
+
+static const uint32_t GPSBaud = 9600;
+TinyGPSPlus gps;
+#define gp Serial2
+
 MPU6050 mpu;
 
 #define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
 bool blinkState = false;
+
+//GPS data
+float longtitude=0.000000;
+float lantitude=0.000000;
 
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
@@ -59,7 +69,7 @@ void setup() {
 
     // initialize serial communication
     Serial.begin(115200);
-
+    gp.begin(GPSBaud);
     // initialize device
     mpuInitialize();
 
@@ -74,8 +84,16 @@ void setup() {
 // ================================================================
 
 void loop() {
+   while (gp.available())
+      gps.encode(gp.read());
 
-
- 
+ if(gps.location.isValid())
+{
+    longtitude =gps.location.lng();
+    lantitude=gps.location.lat();
+    Serial.print(longtitude, 6);Serial.print(" , ");
+    Serial.println(lantitude, 6);
+}
     mpuLoop();
+
 }
