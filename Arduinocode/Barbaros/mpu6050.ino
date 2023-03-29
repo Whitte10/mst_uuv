@@ -83,35 +83,35 @@ void mpuLoop()
         fifoCount -= packetSize;
 
         // display quaternion values in InvenSense mpu demo format:
-        mpuPacket[2] = fifoBuffer[0];
-        mpuPacket[3] = fifoBuffer[1];
-        mpuPacket[4] = fifoBuffer[4];
-        mpuPacket[5] = fifoBuffer[5];
-        mpuPacket[6] = fifoBuffer[8];
-        mpuPacket[7] = fifoBuffer[9];
-        mpuPacket[8] = fifoBuffer[12];
-        mpuPacket[9] = fifoBuffer[13];
+        Packet[2] = fifoBuffer[0];
+        Packet[3] = fifoBuffer[1];
+        Packet[4] = fifoBuffer[4];
+        Packet[5] = fifoBuffer[5];
+        Packet[6] = fifoBuffer[8];
+        Packet[7] = fifoBuffer[9];
+        Packet[8] = fifoBuffer[12];
+        Packet[9] = fifoBuffer[13];
         // gyro values
-        mpuPacket[10] = fifoBuffer[16];
-        mpuPacket[11] = fifoBuffer[17];
-        mpuPacket[12] = fifoBuffer[20];
-        mpuPacket[13] = fifoBuffer[21];
-        mpuPacket[14] = fifoBuffer[24];
-        mpuPacket[15] = fifoBuffer[25];
+        Packet[10] = fifoBuffer[16];
+        Packet[11] = fifoBuffer[17];
+        Packet[12] = fifoBuffer[20];
+        Packet[13] = fifoBuffer[21];
+        Packet[14] = fifoBuffer[24];
+        Packet[15] = fifoBuffer[25];
        
         // accelerometer values
-        mpuPacket[16] = fifoBuffer[28];
-        mpuPacket[17] = fifoBuffer[29];
-        mpuPacket[18] = fifoBuffer[32];
-        mpuPacket[19] = fifoBuffer[33];
-        mpuPacket[20] = fifoBuffer[36];
-        mpuPacket[21] = fifoBuffer[37];
+        Packet[16] = fifoBuffer[28];
+        Packet[17] = fifoBuffer[29];
+        Packet[18] = fifoBuffer[32];
+        Packet[19] = fifoBuffer[33];
+        Packet[20] = fifoBuffer[36];
+        Packet[21] = fifoBuffer[37];
         //temperature
         int16_t temperature = mpu.getTemperature();
-        mpuPacket[22] = temperature >> 8;
-        mpuPacket[23] = temperature & 0xFF;
-        Serial.write(mpuPacket, 28);
-        mpuPacket[25]++; // packetCount, loops at 0xFF on purpose
+        Packet[22] = temperature >> 8;
+        Packet[23] = temperature & 0xFF;
+        Serial.write(Packet, 42);
+        Packet[39]++; // packetCount, loops at 0xFF on purpose
 
         // blink LED to indicate activity
         blinkState = !blinkState;

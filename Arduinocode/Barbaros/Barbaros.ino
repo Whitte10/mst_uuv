@@ -18,8 +18,18 @@ MPU6050 mpu;
 bool blinkState = false;
 
 //GPS data
-float longtitude=0.000000;
-float lantitude=0.000000;
+float longtitude=41.123450;
+float lantitude=21.564350;
+
+//HMC registers and variables
+#define Magnetometer_mX0 0x03  
+#define Magnetometer_mX1 0x04  
+#define Magnetometer_mZ0 0x05  
+#define Magnetometer_mZ1 0x06  
+#define Magnetometer_mY0 0x07  
+#define Magnetometer_mY1 0x08  
+int x,y,z; //triple axis data
+#define Magnetometer 0x1E //I2C 7bit address of HMC5883
 
 // MPU control/status vars
 bool dmpReady = false;  // set true if DMP init was successful
@@ -38,8 +48,10 @@ VectorFloat gravity;    // [x, y, z]            gravity vector
 float euler[3];         // [psi, theta, phi]    Euler angle container
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
+
+
 // packet structure for Mpu6050
-uint8_t mpuPacket[28] = { '$', 0x03, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
+uint8_t Packet[42] = { '$', 0x03, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0x00, 0x00, '\r', '\n' };
 
 
 
@@ -69,10 +81,12 @@ void setup() {
 
     // initialize serial communication
     Serial.begin(115200);
-    gp.begin(GPSBaud);
+    
     // initialize device
+    initializegps();
     mpuInitialize();
-
+    initiliazehmc();
+    
     // configure LED for output
     pinMode(LED_PIN, OUTPUT);
 }
@@ -84,16 +98,9 @@ void setup() {
 // ================================================================
 
 void loop() {
-   while (gp.available())
-      gps.encode(gp.read());
 
- if(gps.location.isValid())
-{
-    longtitude =gps.location.lng();
-    lantitude=gps.location.lat();
-    Serial.print(longtitude, 6);Serial.print(" , ");
-    Serial.println(lantitude, 6);
-}
+    hmcread();
+    readgps();
     mpuLoop();
-
+    
 }
