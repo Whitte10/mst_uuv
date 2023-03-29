@@ -23,10 +23,10 @@ void hmcread(){
     Packet[29] = Wire.read();
     x = Packet[24]<<8; //X msb
     x |= Packet[25]; //X lsb
-    z = Packet[26]<<8; //Z msb
-    z |= Packet[27]; //Z lsb
-    y = Packet[28]<<8; //Y msb
-    y |= Packet[29]; //Y lsb
+    y = Packet[26]<<8; //Z msb
+    y |= Packet[27]; //Z lsb
+    z = Packet[28]<<8; //Y msb
+    z |= Packet[29]; //Y lsb
   }
   
   //Print out values of each axis

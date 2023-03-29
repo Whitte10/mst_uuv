@@ -20,7 +20,8 @@ bool blinkState = false;
 //GPS data
 float longtitude=41.123450;
 float lantitude=21.564350;
-
+float mylongtitude=0;
+float mylantitude=0;
 //HMC registers and variables
 #define Magnetometer_mX0 0x03  
 #define Magnetometer_mX1 0x04  
