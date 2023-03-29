@@ -1,3 +1,6 @@
+int x,y,z; //triple axis data
+#define Magnetometer 0x1E //I2C 7bit address of HMC5883
+
 void initiliazehmc(){
   Wire.beginTransmission(Magnetometer); 
   Wire.write(0x02); // Select mode register
