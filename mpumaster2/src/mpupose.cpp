@@ -21,6 +21,16 @@ geometry_msgs::Pose ball_model_pose, ball_link_pose;
 // Service client for setting model poses
 ros::ServiceClient set_model_state_client;
 
+float latitude;
+float longtitude;
+
+union cvt {
+    char gpsbyte[4];
+    float gpsfval;
+} gpsconverter;
+
+
+
 int getIndex(std::vector<std::string> v, std::string value)
 {
     for(int i = 0; i < v.size(); i++)
@@ -163,14 +173,14 @@ int main(int argc, char** argv)
           read = ser.read(ser.available());
           ROS_DEBUG("read %i new characters from serial port, adding to %i characters of old input.", (int)read.size(), (int)input.size());
           input += read;
-          while (input.length() >= 28) // while there might be a complete package in input
+          while (input.length() >= 42) // while there might be a complete package in input
           {
             //parse for data packets
             data_packet_start = input.find("$\x03");
             if (data_packet_start != std::string::npos)
             {
               ROS_DEBUG("found possible start of data packet at position %d", data_packet_start);
-              if ((input.length() >= data_packet_start + 28) && (input.compare(data_packet_start + 26, 2, "\r\n") == 0))  //check if positions 26,27 exist, then test values
+              if ((input.length() >= data_packet_start + 42) && (input.compare(data_packet_start + 40, 2, "\r\n") == 0))  //check if positions 26,27 exist, then test values
               {
                 ROS_DEBUG("seems to be a real data package: long enough and found end characters");
                 // get quaternion values
@@ -224,7 +234,32 @@ int main(int argc, char** argv)
                 double temperature_in_C = (temperature / 340.0 ) + 36.53;
                 ROS_DEBUG_STREAM("Temperature [in C] " << temperature_in_C);
 
-                uint8_t received_message_number = input[data_packet_start + 25];
+                // get magnetometer values
+                int16_t mx = (((0xff &(char)input[data_packet_start + 24]) << 8) | 0xff &(char)input[data_packet_start + 25]);
+                int16_t my = (((0xff &(char)input[data_packet_start + 26]) << 8) | 0xff &(char)input[data_packet_start + 27]);
+                int16_t mz = (((0xff &(char)input[data_packet_start + 28]) << 8) | 0xff &(char)input[data_packet_start + 29]);
+                //ROS_WARN_STREAM("mx " << mx << " dir");
+                //ROS_WARN_STREAM("my " << my << " dir");
+                //ROS_WARN_STREAM("mz " << mz << " dir");
+                // get gps values
+
+                gpsconverter.gpsbyte[0] = input[data_packet_start + 30];
+                gpsconverter.gpsbyte[1] = input[data_packet_start + 31];
+                gpsconverter.gpsbyte[2] = input[data_packet_start + 32];
+                gpsconverter.gpsbyte[3] = input[data_packet_start + 33];
+                longtitude = gpsconverter.gpsfval;
+
+                ROS_WARN_STREAM("long " << longtitude << " dir");
+
+                gpsconverter.gpsbyte[0] = input[data_packet_start + 34];
+                gpsconverter.gpsbyte[1] = input[data_packet_start + 35];
+                gpsconverter.gpsbyte[2] = input[data_packet_start + 36];
+                gpsconverter.gpsbyte[3] = input[data_packet_start + 37];
+                latitude = gpsconverter.gpsfval;
+
+                ROS_WARN_STREAM("lat " << latitude << " dir");
+
+                uint8_t received_message_number = input[data_packet_start + 41];
                 ROS_DEBUG("received message number: %i", received_message_number);
 
                 if (received_message) // can only check for continuous numbers if already received at least one packet
@@ -294,11 +329,11 @@ int main(int argc, char** argv)
                   transform.setRotation(differential_rotation);
                   tf_br.sendTransform(tf::StampedTransform(transform, measurement_time, tf_parent_frame_id, tf_frame_id));
                 }
-                input.erase(0, data_packet_start + 28); // delete everything up to and including the processed packet
+                input.erase(0, data_packet_start + 42); // delete everything up to and including the processed packet
               }
               else
               {
-                if (input.length() >= data_packet_start + 28)
+                if (input.length() >= data_packet_start + 42)
                 {
                   input.erase(0, data_packet_start + 1); // delete up to false data_packet_start character so it is not found again
                 }
