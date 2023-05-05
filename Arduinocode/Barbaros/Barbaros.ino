@@ -11,7 +11,7 @@
 bool blinkState = false;
 
 // packet structure 
-uint8_t Packet[41] = { '$', 0x03, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0, 0x00, 0x00, '\r', '\n' };
+uint8_t Packet[49] = { '$', 0x03, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0, 0x00, 0x00, '\r', '\n' };
 
 
 // ================================================================
@@ -50,6 +50,6 @@ void loop() {
     hmcread();
     readgps();
     readmpu();
-    Serial.write(Packet, 41);
-    Packet[38]++; // packetCount, loops at 0xFF on purpose
+    Serial.write(Packet, 49);
+    Packet[46]++; // packetCount, loops at 0xFF on purpose
 }
