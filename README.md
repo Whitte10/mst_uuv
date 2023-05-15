@@ -69,7 +69,7 @@ Github desktop için: https://gist.github.com/berkorbay/6feda478a00b0432d13f1fc0
 
 Ardından gerekli bazı paketler için;
 
-	sudo apt-get install ros-indigo-serial
+	sudo apt-get install ros-noetic-serial
 	pip install scipy
 	sudo apt-get install ros-noetic-rosserial-arduino ros-noetic-rosserial-embeddedlinux ros-noetic-rosserial-windows ros-noetic-rosserial-server ros-noetic-rosserial-python
 
