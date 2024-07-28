@@ -1,0 +1,58 @@
+Ros sitesinden ros yüklenir
+http://wiki.ros.org/noetic/Installation/Ubuntu
+
+	sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+	sudo apt install curl
+
+	curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
+	sudo apt update
+
+	sudo apt install ros-noetic-desktop-full
+
+	source /opt/ros/noetic/setup.bash
+
+	echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+	
+	source ~/.bashrc
+
+	sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
+
+	sudo apt install python3-rosdep
+
+	sudo rosdep init
+
+	rosdep update
+
+mkdir ile catkin_ws oluşturup içine src klasörü koyulur
+terminalde catkin_ws yolunda catkin_make yapılır
+
+src içine mst_uuv dosyasını kopyala
+
+terminalde catkin_ws yolunda catkin_make yapılır
+
+pip install scipy
+
+terminalde en ana dizinde gedit ~/.bashrc yazılır
+	source /opt/ros/noetic/setup.bash
+	source /home/white10/catkin_ws/devel/setup.bash
+	satırlarını sona yapıştır(white10 yerine kullanıcı adı)
+	
+turtlebot için;
+	1) Terminal açın.
+	2) Çalışma alanının kaynak klasörüne gidin (cd catkin_ws/src)
+	3) Aşağıdaki kodları terminale kopyalayın.
+	git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+	git clone https://github.com/ROBOTIS-GIT/turtlebot3.git -b noetic-devel
+	git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git -b noetic-devel
+	4) Çalışma alanına geri dönün (cd ~/catkin_ws) ve derleyin (catkin_make).
+
+	
+terminalde en ana dizinde gedit ~/.bashrc yaz
+	export TURTLEBOT3_MODEL=waffle_pi
+satırlarını sona yapıştır
+
+find object 2d için
+	git clone https://github.com/introlab/find-object.git -b noetic-devel
+	ana dizine git derle

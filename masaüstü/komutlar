@@ -1,0 +1,10 @@
+roslaunch uuv_gazebo pid_parameter_load.launch 
+roslaunch uuv_control_utils send_waypoints_file.launch uuv_name:=barbaros interpolator:=linear
+roslaunch uuv_gazebo start_pid_demo_barbaros.launch 
+rosrun mpu6050_serial_to_imu mpupose
+roslaunch mpu6050_serial_to_imu mpupose.launch 
+rosservice call /gazebo/set_model_state "model_state:
+roslaunch uuv_teleop uuv_keyboard_teleop.launch
+roslaunch uuv_teleop uuv_keyboard_teleop.launch uuv_name:=barbaros
+rosrun rqt_tf_tree rqt_tf_tree 
+
